@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UT Game Jams | Institute of Computer Science</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --color-primary: #96C8E6;   /* Light Blue */
+            --color-secondary: #517DB9; /* Darker Blue */
+            --accent-glow: rgba(150, 200, 230, 0.4);
+            --text-light: #ffffff;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+
+        body {
+            font-family: 'Fredoka One', cursive; 
+            margin: 0;
+            padding: 0;
+            color: var(--text-light);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            /* ANIMATED GRADIENT BACKGROUND */
+            /* This creates a moving "mesh" effect without needing an image file */
+            background: linear-gradient(-45deg, #0f172a, #1e293b, #334155, #517DB9);
+            animation: gradientMove 15s ease infinite;
+            background-attachment: fixed;
+            background-image: url('back.jpg');
+            background-size: cover;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            max-width: 800px;
+            width: 90%;
+            margin: 40px auto;
+            padding: 40px;
+            
+            /* GLASSMORPHISM EFFECT */
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        /* --- Header & Logo --- */
+        header {
+            padding-bottom: 20px;
+        }
+
+        .logo-img {
+            max-width: 300px;
+            height: auto;
+            padding: 10px;
+            /* Makes logos pop against dark backgrounds */
+            filter: drop-shadow(0 0 8px rgba(255,255,255,0.2));
+            transition: transform 0.3s ease;
+        }
+
+        .logo-img:hover {
+            transform: scale(1.05);
+        }
+
+        #secondary-logo {
+            max-width: 120px;
+            margin: 10px;
+            opacity: 0.8;
+        }
+
+        /* --- Countdown Timer --- */
+        .countdown-wrapper {
+            margin: 30px 0;
+        }
+        
+        .countdown-wrapper h3 {
+            color: var(--color-primary);
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .time-box {
+            background: rgba(0, 0, 0, 0.3);
+            color: var(--text-light);
+            padding: 15px 20px;
+            border-radius: 15px;
+            min-width: 80px;
+            border: 1px solid var(--color-secondary);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .time-box span {
+            display: block;
+            font-size: 2.2rem;
+            line-height: 1;
+            color: var(--color-primary);
+        }
+
+        .time-box div {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            margin-top: 5px;
+            letter-spacing: 1px;
+            opacity: 0.7;
+        }
+
+        /* --- Links & Footer --- */
+        a {
+            color: var(--color-primary);
+            text-decoration: none;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            color: #fff;
+            border-bottom-color: var(--color-primary);
+            text-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+        
+        .contact-email {
+            font-size: 1rem;
+            background: rgba(150, 200, 230, 0.15);
+            display: inline-block;
+            padding: 10px 25px;
+            border-radius: 30px;
+            border: 1px solid var(--glass-border);
+        }
+
+        /* Responsive Tweaks */
+        @media (max-width: 600px) {
+            .time-box { min-width: 60px; padding: 10px; }
+            .time-box span { font-size: 1.5rem; }
+            .container { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <img src="mj_logo_1.png" alt="UT Game Jam Logo" class="logo-img" id="main-logo">
+
+            <div class="countdown-wrapper">
+                <h3>Next Jam Starts In:</h3>
+                <div class="countdown" id="countdown">
+                    <div class="time-box"><span id="days">00</span><div>Days</div></div>
+                    <div class="time-box"><span id="hours">00</span><div>Hours</div></div>
+                    <div class="time-box"><span id="minutes">00</span><div>Minutes</div></div>
+                    <div class="time-box"><span id="seconds">00</span><div>Seconds</div></div>
+                </div>
+                <br>
+                <div>17.04.2026</div>
+            </div>
+
+            <div class="partner-logos">
+                <img src="ati.svg" alt="ATI Logo" class="logo-img" id="secondary-logo" onclick="window.open('https://cs.ut.ee/', '_blank')" style="cursor: pointer;">
+                <img src="cgvr.svg" alt="CGVR Logo" class="logo-img" id="secondary-logo" onclick="window.open('https://cgvr.cs.ut.ee/', '_blank')" style="cursor: pointer;">
+            </div>
+        </header>
+
+        <footer>
+            <h2>See you in the next game jam!</h2>
+            <div class="contact-email">
+                Inquiries: <a href="mailto:gamejams@ut.ee">gamejams@ut.ee</a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Set for April 17, 2026 at 19:00:00
+        const countDownDate = new Date("April 17, 2026 19:00:00").getTime();
+
+        const x = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = countDownDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerHTML = days.toString().padStart(2, '0');
+            document.getElementById("hours").innerHTML = hours.toString().padStart(2, '0');
+            document.getElementById("minutes").innerHTML = minutes.toString().padStart(2, '0');
+            document.getElementById("seconds").innerHTML = seconds.toString().padStart(2, '0');
+
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("countdown").innerHTML = "<h3 style='color: var(--color-primary);'>The Jam Has Started!</h3>";
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
