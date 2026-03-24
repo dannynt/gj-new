@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react'
-import { Box, HStack, Text, Flex, IconButton, VStack, Collapse } from '@chakra-ui/react'
+import { Box, HStack, Text, Flex, VStack } from '@chakra-ui/react'
 import { motion, useScroll, useSpring, AnimatePresence } from 'framer-motion'
 
 const MotionBox = motion(Box)
-const MotionVStack = motion(VStack)
 
 const sections = [
   { id: 'hero', label: 'Avaleht' },
@@ -176,7 +175,6 @@ export default function Navbar() {
         <Box
           display={{ base: 'flex', md: 'none' }}
           w="100%"
-          justify="flex-end"
           alignItems="center"
         >
           <Box
@@ -232,7 +230,6 @@ export default function Navbar() {
                     bg={isActive ? 'rgba(113,189,255,0.06)' : 'transparent'}
                     borderLeft={isActive ? '2px solid #71BDFF' : '2px solid transparent'}
                     _hover={{ bg: 'rgba(113,189,255,0.08)' }}
-                    transition="all 0.15s"
                     textAlign="left"
                     w="100%"
                   >
