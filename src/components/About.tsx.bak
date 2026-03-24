@@ -1,0 +1,245 @@
+import { useState } from 'react'
+import {
+  Box,
+  Heading,
+  Text,
+  VStack,
+  Icon,
+  HStack,
+  Flex,
+  Badge,
+} from '@chakra-ui/react'
+import { motion } from 'framer-motion'
+import { FaUsers, FaLaptopCode, FaPalette, FaMusic, FaChalkboardTeacher, FaUserFriends, FaCheck, FaUnlock } from 'react-icons/fa'
+
+const MotionBox = motion(Box)
+
+const roles = [
+  { icon: FaLaptopCode, title: 'Programmeerija', desc: 'Loo mängu loogika' },
+  { icon: FaPalette, title: 'Kunstnik', desc: 'Disaini visuaalid' },
+  { icon: FaMusic, title: 'Helidisainer', desc: 'Loo helid ja muusika' },
+  { icon: FaUsers, title: 'Disainer', desc: 'Planeeri mängu' },
+]
+
+const features = [
+  { icon: FaChalkboardTeacher, title: 'Juhendajad', desc: 'Eksperdid aitavad' },
+  { icon: FaUserFriends, title: 'Tiimid', desc: 'Tasakaalustatud' },
+]
+
+// Interactive role card with selection state
+const RoleCard = ({ role, index, isSelected, onSelect }: { 
+  role: typeof roles[0]; 
+  index: number;
+  isSelected: boolean;
+  onSelect: () => void;
+}) => (
+  <MotionBox
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.3, delay: index * 0.08 }}
+    whileHover={{ scale: 1.05 }}
+    whileTap={{ scale: 0.95 }}
+    onClick={onSelect}
+    cursor="pointer"
+  >
+    <Box
+      bg={isSelected ? 'rgba(169, 200, 230, 0.15)' : 'rgba(10, 10, 10, 0.9)'}
+      border="2px solid"
+      borderColor={isSelected ? '#A9C8E6' : 'rgba(169, 200, 230, 0.3)'}
+      borderRadius="xl"
+      p={3}
+      textAlign="center"
+      position="relative"
+      transition="all 0.2s"
+      minW={{ base: '70px', md: '90px' }}
+    >
+      {isSelected && (
+        <MotionBox
+          position="absolute"
+          top={-1}
+          right={-1}
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ type: 'spring', stiffness: 400 }}
+        >
+          <Box bg="#A9C8E6" borderRadius="full" p={0.5}>
+            <Icon as={FaCheck} boxSize={2} color="#0A0A0A" />
+          </Box>
+        </MotionBox>
+      )}
+      <Icon 
+        as={role.icon} 
+        boxSize={{ base: 5, md: 6 }} 
+        color={isSelected ? '#A9C8E6' : '#8B8B8B'}
+        mb={1}
+      />
+      <Text 
+        fontSize="2xs" 
+        color={isSelected ? 'white' : '#8B8B8B'} 
+        fontFamily="'Fredoka One', cursive"
+      >
+        {role.title}
+      </Text>
+    </Box>
+  </MotionBox>
+)
+
+// Compact feature badge
+const FeatureBadge = ({ feature, index }: { feature: typeof features[0]; index: number }) => (
+  <MotionBox
+    initial={{ opacity: 0, scale: 0.9 }}
+    whileInView={{ opacity: 1, scale: 1 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.3, delay: index * 0.1 }}
+    whileHover={{ scale: 1.03 }}
+  >
+    <HStack
+      bg="rgba(10, 10, 10, 0.9)"
+      border="2px solid"
+      borderColor="#A9C8E6"
+      borderRadius="full"
+      px={4}
+      py={2}
+      spacing={2}
+    >
+      <Icon as={feature.icon} boxSize={4} color="#A9C8E6" />
+      <VStack spacing={0} align="start">
+        <Text fontSize="xs" color="white" fontFamily="'Fredoka One', cursive">
+          {feature.title}
+        </Text>
+        <Text fontSize="2xs" color="#8B8B8B">{feature.desc}</Text>
+      </VStack>
+    </HStack>
+  </MotionBox>
+)
+
+export default function About() {
+  const [selectedRoles, setSelectedRoles] = useState<number[]>([])
+
+  const toggleRole = (index: number) => {
+    setSelectedRoles(prev => 
+      prev.includes(index) 
+        ? prev.filter(i => i !== index)
+        : [...prev, index]
+    )
+  }
+
+  return (
+    <MotionBox
+      id="about"
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      w="full"
+      position="relative"
+      zIndex={1}
+    >
+      <VStack spacing={{ base: 5, md: 6 }}>
+        {/* Single compact card with all info */}
+        <MotionBox
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4 }}
+          w="full"
+          maxW="600px"
+        >
+          <Box
+            bg="rgba(10, 10, 10, 0.95)"
+            border="2px solid #A9C8E6"
+            borderRadius="xl"
+            p={{ base: 4, md: 6 }}
+            position="relative"
+            overflow="hidden"
+          >
+            {/* Header with badge */}
+            <HStack justify="space-between" mb={4}>
+              <HStack spacing={2}>
+                <Box
+                  w={8}
+                  h={8}
+                  borderRadius="lg"
+                  bg="rgba(169, 200, 230, 0.15)"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  <Icon as={FaUnlock} boxSize={4} color="#A9C8E6" />
+                </Box>
+                <Heading
+                  fontSize={{ base: 'sm', md: 'md' }}
+                  color="white"
+                  fontFamily="'Fredoka One', cursive"
+                >
+                  MIS ON MÄNGUJÄMM?
+                </Heading>
+              </HStack>
+              <Badge bg="rgba(169, 200, 230, 0.15)" color="#A9C8E6" fontSize="2xs" borderRadius="full" px={2}>
+                48H
+              </Badge>
+            </HStack>
+
+            {/* Description */}
+            <Text fontSize={{ base: 'xs', md: 'sm' }} color="#CCCCCC" mb={4} lineHeight="1.6">
+              Mängujämm on <Text as="span" color="#A9C8E6">2-3 päevane üritus</Text>, kus lood tiimiga mängu nullist. 
+              <Text as="span" color="#A9C8E6"> Hariv ja inspireeriv kogemus!</Text>
+            </Text>
+
+            {/* Interactive role selection */}
+            <Box mb={4}>
+              <Text fontSize="2xs" color="#8B8B8B" mb={2} fontFamily="'Fredoka One', cursive">
+                VALI OMA ROLL (TAP TO SELECT):
+              </Text>
+              <Flex gap={2} flexWrap="wrap" justify="center">
+                {roles.map((role, index) => (
+                  <RoleCard 
+                    key={index} 
+                    role={role} 
+                    index={index}
+                    isSelected={selectedRoles.includes(index)}
+                    onSelect={() => toggleRole(index)}
+                  />
+                ))}
+              </Flex>
+              {selectedRoles.length > 0 && (
+                <MotionBox
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  mt={2}
+                >
+                  <Text fontSize="2xs" color="#A9C8E6" textAlign="center">
+                    {selectedRoles.length === 4 
+                      ? '🎮 Täielik tiim!' 
+                      : `${selectedRoles.length}/4 rolli valitud`}
+                  </Text>
+                </MotionBox>
+              )}
+            </Box>
+
+            {/* Feature badges */}
+            <Flex gap={2} justify="center" flexWrap="wrap" mb={3}>
+              {features.map((feature, index) => (
+                <FeatureBadge key={index} feature={feature} index={index} />
+              ))}
+            </Flex>
+
+            {/* Call to action */}
+            <Box
+              bg="rgba(169, 200, 230, 0.1)"
+              borderRadius="lg"
+              py={2}
+              px={3}
+              textAlign="center"
+            >
+              <Text fontSize="2xs" color="#A9C8E6" fontFamily="'Fredoka One', cursive">
+                KOGEMUST POLE VAJA — ALGAJAD TERETULNUD!
+              </Text>
+            </Box>
+          </Box>
+        </MotionBox>
+      </VStack>
+    </MotionBox>
+  )
+}

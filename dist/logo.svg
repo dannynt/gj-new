@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="triangleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#A9C8E6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8AB4DC;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <!-- Main triangle -->
+  <polygon points="100,20 180,160 20,160" fill="none" stroke="url(#triangleGrad)" stroke-width="8" stroke-linejoin="round"/>
+  <!-- Inner triangle -->
+  <polygon points="100,45 155,140 45,140" fill="none" stroke="url(#triangleGrad)" stroke-width="4" stroke-linejoin="round" opacity="0.6"/>
+  <!-- TÜ text -->
+  <text x="100" y="95" text-anchor="middle" font-family="Fredoka One, sans-serif" font-size="28" fill="#A9C8E6">TÜ</text>
+  <!-- MÄNGU- text -->
+  <text x="100" y="120" text-anchor="middle" font-family="Fredoka One, sans-serif" font-size="18" fill="white" letter-spacing="2">MÄNGU-</text>
+  <!-- JAMM text -->
+  <text x="100" y="145" text-anchor="middle" font-family="Fredoka One, sans-serif" font-size="24" fill="#DB551C" letter-spacing="3">JAMM</text>
+</svg>

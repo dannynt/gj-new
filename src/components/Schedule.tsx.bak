@@ -1,0 +1,275 @@
+import { useState } from 'react'
+import {
+  Box,
+  Heading,
+  Text,
+  VStack,
+  HStack,
+  Icon,
+  Flex,
+  Badge,
+} from '@chakra-ui/react'
+import { motion } from 'framer-motion'
+import { FaRocket, FaUsers, FaGamepad, FaPaperPlane, FaVoteYea, FaChalkboardTeacher, FaTrophy, FaChevronRight } from 'react-icons/fa'
+
+const MotionBox = motion(Box)
+
+interface ScheduleEvent {
+  time: string
+  title: string
+  icon: React.ElementType
+}
+
+interface DaySchedule {
+  date: string
+  day: string
+  shortDay: string
+  events: ScheduleEvent[]
+}
+
+const schedule: DaySchedule[] = [
+  {
+    date: '17. aprill',
+    day: 'Reede',
+    shortDay: 'RE',
+    events: [
+      { time: '19:00', title: 'Avamine & Teema', icon: FaRocket },
+      { time: '23:59', title: 'Registreerimise tähtaeg', icon: FaUsers },
+    ],
+  },
+  {
+    date: '18. aprill',
+    day: 'Laupäev',
+    shortDay: 'LA',  
+    events: [
+      { time: '→', title: 'Arendamine 🎨👾', icon: FaGamepad },
+    ],
+  },
+  {
+    date: '19. aprill',
+    day: 'Pühapäev',
+    shortDay: 'PÜ',
+    events: [
+      { time: '16:00', title: 'Esitamise tähtaeg', icon: FaPaperPlane },
+      { time: '16–18', title: 'Hääletamine', icon: FaVoteYea },
+      { time: '18:30', title: 'Esitlused', icon: FaChalkboardTeacher },
+      { time: '20:00', title: 'Autasud 🏆', icon: FaTrophy },
+    ],
+  },
+]
+
+// Tab button
+const DayTab = ({ day, isActive, onClick, index }: { 
+  day: DaySchedule; 
+  isActive: boolean; 
+  onClick: () => void;
+  index: number;
+}) => (
+  <MotionBox
+    initial={{ opacity: 0, y: 10 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.3, delay: index * 0.1 }}
+    whileHover={{ scale: 1.02 }}
+    whileTap={{ scale: 0.98 }}
+    cursor="pointer"
+    onClick={onClick}
+    flex={1}
+  >
+    <Box
+      bg={isActive ? 'rgba(169, 200, 230, 0.15)' : 'transparent'}
+      border="2px solid"
+      borderColor={isActive ? '#A9C8E6' : 'rgba(169, 200, 230, 0.3)'}
+      borderRadius="lg"
+      px={3}
+      py={2}
+      textAlign="center"
+      transition="all 0.2s"
+    >
+      <Text
+        fontSize="xs"
+        color={isActive ? '#A9C8E6' : '#8B8B8B'}
+        fontFamily="'Fredoka One', cursive"
+      >
+        {day.shortDay}
+      </Text>
+      <Text fontSize="2xs" color={isActive ? 'white' : '#666'}>
+        {day.date.split('.')[0]}
+      </Text>
+    </Box>
+  </MotionBox>
+)
+
+// Compact event row
+const EventRow = ({ event, index }: { event: ScheduleEvent; index: number }) => (
+  <MotionBox
+    initial={{ opacity: 0, x: -10 }}
+    animate={{ opacity: 1, x: 0 }}
+    transition={{ duration: 0.2, delay: index * 0.05 }}
+    whileHover={{ x: 3 }}
+  >
+    <HStack
+      spacing={3}
+      py={2}
+      px={3}
+      bg="rgba(169, 200, 230, 0.05)"
+      borderRadius="lg"
+      border="1px solid rgba(169, 200, 230, 0.1)"
+      _hover={{ bg: 'rgba(169, 200, 230, 0.1)' }}
+      transition="all 0.2s"
+      cursor="pointer"
+    >
+      <Box
+        w={7}
+        h={7}
+        borderRadius="md"
+        bg="rgba(169, 200, 230, 0.1)"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        flexShrink={0}
+      >
+        <Icon as={event.icon} boxSize={3.5} color="#A9C8E6" />
+      </Box>
+      <Box flex={1}>
+        <HStack justify="space-between" align="center">
+          <Text fontSize="xs" color="white">
+            {event.title}
+          </Text>
+          <Badge
+            bg="rgba(169, 200, 230, 0.1)"
+            color="#A9C8E6"
+            fontSize="2xs"
+            borderRadius="md"
+            px={2}
+          >
+            {event.time}
+          </Badge>
+        </HStack>
+      </Box>
+    </HStack>
+  </MotionBox>
+)
+
+// Progress indicator
+const ProgressBar = ({ activeDay }: { activeDay: number }) => (
+  <Flex justify="center" gap={2} mb={3}>
+    {[0, 1, 2].map(i => (
+      <MotionBox
+        key={i}
+        w={i <= activeDay ? '24px' : '8px'}
+        h="4px"
+        bg={i <= activeDay ? '#A9C8E6' : 'rgba(169, 200, 230, 0.3)'}
+        borderRadius="full"
+        animate={{ width: i <= activeDay ? '24px' : '8px' }}
+        transition={{ duration: 0.3 }}
+      />
+    ))}
+  </Flex>
+)
+
+export default function Schedule() {
+  const [activeDay, setActiveDay] = useState(0)
+
+  return (
+    <MotionBox
+      id="schedule"
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      w="full"
+      position="relative"
+      zIndex={1}
+    >
+      <VStack spacing={{ base: 4, md: 5 }}>
+        {/* Compact header */}
+        <MotionBox
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          textAlign="center"
+        >
+          <Heading
+            fontSize={{ base: 'md', md: 'lg' }}
+            color="#A9C8E6"
+            fontFamily="'Fredoka One', cursive"
+            mb={1}
+          >
+            📅 AJAKAVA
+          </Heading>
+          <Text color="#8B8B8B" fontSize="2xs">
+            17.–19. aprill 2026
+          </Text>
+        </MotionBox>
+
+        {/* Interactive schedule card */}
+        <Box
+          w="full"
+          maxW="450px"
+          bg="rgba(10, 10, 10, 0.95)"
+          border="2px solid #A9C8E6"
+          borderRadius="xl"
+          p={{ base: 4, md: 5 }}
+          position="relative"
+        >
+          {/* Day tabs */}
+          <HStack spacing={2} mb={4}>
+            {schedule.map((day, index) => (
+              <DayTab
+                key={index}
+                day={day}
+                isActive={activeDay === index}
+                onClick={() => setActiveDay(index)}
+                index={index}
+              />
+            ))}
+          </HStack>
+
+          {/* Progress indicator */}
+          <ProgressBar activeDay={activeDay} />
+
+          {/* Active day content */}
+          <MotionBox
+            key={activeDay}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            {/* Day header */}
+            <HStack mb={3} spacing={2}>
+              <Text
+                fontSize="sm"
+                color="#A9C8E6"
+                fontFamily="'Fredoka One', cursive"
+              >
+                {schedule[activeDay].day}
+              </Text>
+              <Icon as={FaChevronRight} boxSize={2} color="#A9C8E6" />
+              <Text fontSize="sm" color="white">
+                {schedule[activeDay].date}
+              </Text>
+            </HStack>
+
+            {/* Events list */}
+            <VStack spacing={2} align="stretch">
+              {schedule[activeDay].events.map((event, eventIndex) => (
+                <EventRow key={eventIndex} event={event} index={eventIndex} />
+              ))}
+            </VStack>
+          </MotionBox>
+
+          {/* Navigation hint */}
+          <Text
+            fontSize="2xs"
+            color="#666"
+            textAlign="center"
+            mt={3}
+            fontStyle="italic"
+          >
+            Tap päevale sirvimiseks
+          </Text>
+        </Box>
+      </VStack>
+    </MotionBox>
+  )
+}

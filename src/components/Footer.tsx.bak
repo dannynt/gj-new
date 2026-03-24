@@ -1,0 +1,185 @@
+import {
+  Box,
+  Text,
+  VStack,
+  HStack,
+  Link,
+  Icon,
+  Flex,
+  Image,
+  keyframes,
+} from '@chakra-ui/react'
+import { motion } from 'framer-motion'
+import { FaFacebook, FaYoutube, FaInstagram, FaEnvelope } from 'react-icons/fa'
+
+const MotionBox = motion(Box)
+
+// Gradient divider animation
+const gradientMove = keyframes`
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+`
+
+const socialLinks = [
+  { icon: FaFacebook, href: 'https://www.facebook.com/cgvrlab', label: 'Facebook', color: '#4267B2' },
+  { icon: FaInstagram, href: 'https://www.instagram.com/cgvrlab/', label: 'Instagram', color: '#E4405F' },
+  { icon: FaYoutube, href: 'https://www.youtube.com/watch?v=btl3x3Kxna4&list=PLZuhE0KUIVOxbAni6Dffsva92jLxxf75P', label: 'YouTube', color: '#FF0000' },
+  { icon: FaEnvelope, href: 'mailto:gamejams.cs@ut.ee', label: 'Email', color: '#A9C8E6' },
+]
+
+// Social link button component
+const SocialButton = ({ social, index }: { social: typeof socialLinks[0]; index: number }) => (
+  <MotionBox
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.4, delay: index * 0.1 }}
+    whileHover={{ y: -5, scale: 1.1 }}
+  >
+    <Link
+      href={social.href}
+      isExternal
+      aria-label={social.label}
+    >
+      <Box
+        bg="rgba(10, 10, 10, 0.95)"
+        p={4}
+        borderRadius="xl"
+        border="2px solid"
+        borderColor="#A9C8E6"
+        position="relative"
+        overflow="hidden"
+        _hover={{
+          borderColor: social.color,
+          '& svg': { color: social.color },
+        }}
+        transition="all 0.3s"
+      >
+        <Icon as={social.icon} boxSize={6} color="#A9C8E6" position="relative" zIndex={1} transition="color 0.3s" />
+      </Box>
+    </Link>
+  </MotionBox>
+)
+
+// Partner logo component  
+const PartnerLogo = ({ src, href, alt, delay }: { src: string; href: string; alt: string; delay: number }) => (
+  <MotionBox
+    initial={{ opacity: 0, scale: 0.9 }}
+    whileInView={{ opacity: 1, scale: 1 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.5, delay }}
+    whileHover={{ scale: 1.05 }}
+  >
+    <Link href={href} isExternal>
+      <Image 
+        src={src} 
+        alt={alt} 
+        h={{ base: '40px', md: '50px' }}
+        w="auto"
+        opacity={0.7}
+        _hover={{ opacity: 1 }}
+        transition="opacity 0.3s"
+      />
+    </Link>
+  </MotionBox>
+)
+
+export default function Footer() {
+  return (
+    <MotionBox
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6 }}
+      w="full"
+      py={{ base: 8, md: 12 }}
+      position="relative"
+      zIndex={1}
+    >
+      <VStack spacing={8}>
+        {/* Animated Divider */}
+        <Box 
+          w="full" 
+          maxW="500px" 
+          h="2px"
+          bg="linear-gradient(90deg, transparent, #A9C8E6, #A9C8E6, transparent)"
+          backgroundSize="200% 100%"
+          animation={`${gradientMove} 4s linear infinite`}
+          borderRadius="full"
+        />
+
+        {/* Social Links */}
+        <HStack spacing={5}>
+          {socialLinks.map((social, index) => (
+            <SocialButton key={index} social={social} index={index} />
+          ))}
+        </HStack>
+
+        {/* Partners */}
+        <HStack
+          w="full"
+          justify="center"
+          spacing={{ base: 12, md: 24 }}
+          py={6}
+        >
+          <PartnerLogo 
+            src="/cgvr.svg"
+            href="https://cgvr.cs.ut.ee"
+            alt="CGVR Lab"
+            delay={0.1}
+          />
+          <PartnerLogo 
+            src="/ati.svg"
+            href="https://cs.ut.ee"
+            alt="Arvutiteaduse instituut"
+            delay={0.2}
+          />
+        </HStack>
+
+        {/* Contact */}
+        <MotionBox
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
+          <HStack 
+            spacing={3}
+            bg="rgba(10, 10, 10, 0.8)"
+            px={6}
+            py={3}
+            borderRadius="full"
+            border="1px solid"
+            borderColor="rgba(169, 200, 230, 0.2)"
+          >
+            <Icon as={FaEnvelope} color="#A9C8E6" boxSize={4} />
+            <Text color="#8B8B8B" fontSize="sm">
+              Küsimused:{' '}
+              <Link 
+                href="mailto:gamejams.cs@ut.ee" 
+                color="#A9C8E6"
+                fontWeight="medium"
+                _hover={{ color: 'white', textDecoration: 'none' }}
+                transition="color 0.2s"
+              >
+                gamejams.cs@ut.ee
+              </Link>
+            </Text>
+          </HStack>
+        </MotionBox>
+
+        {/* Copyright */}
+        <MotionBox
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+        >
+          <HStack spacing={3} color="#666" fontSize="xs">
+            <Text>© 2026 TÜ Mänguämm</Text>
+          </HStack>
+        </MotionBox>
+      </VStack>
+    </MotionBox>
+  )
+}
