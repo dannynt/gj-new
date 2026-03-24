@@ -24,7 +24,7 @@ const socialLinks = [
   { icon: FaFacebook, href: 'https://www.facebook.com/cgvrlab', label: 'Facebook', color: '#4267B2' },
   { icon: FaInstagram, href: 'https://www.instagram.com/cgvrlab/', label: 'Instagram', color: '#E4405F' },
   { icon: FaYoutube, href: 'https://www.youtube.com/watch?v=btl3x3Kxna4&list=PLZuhE0KUIVOxbAni6Dffsva92jLxxf75P', label: 'YouTube', color: '#FF0000' },
-  { icon: FaEnvelope, href: 'mailto:gamejams.cs@ut.ee', label: 'Email', color: '#A9C8E6' },
+  { icon: FaEnvelope, href: 'mailto:gamejams@ut.ee', label: 'Email', color: '#A9C8E6' },
 ]
 
 // Social link button component
@@ -156,13 +156,13 @@ export default function Footer() {
             <Text color="#8B8B8B" fontSize="sm">
               Küsimused:{' '}
               <Link 
-                href="mailto:gamejams.cs@ut.ee" 
+                href="mailto:gamejams@ut.ee" 
                 color="#A9C8E6"
                 fontWeight="medium"
                 _hover={{ color: 'white', textDecoration: 'none' }}
                 transition="color 0.2s"
               >
-                gamejams.cs@ut.ee
+                gamejams@ut.ee
               </Link>
             </Text>
           </HStack>

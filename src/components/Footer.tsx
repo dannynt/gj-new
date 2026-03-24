@@ -18,7 +18,7 @@ const socialLinks = [
   { icon: FaFacebook, href: 'https://www.facebook.com/cgvrlab', label: 'Facebook', color: '#4267B2' },
   { icon: FaInstagram, href: 'https://www.instagram.com/cgvrlab/', label: 'Instagram', color: '#E4405F' },
   { icon: FaYoutube, href: 'https://www.youtube.com/@cgvrlab', label: 'YouTube', color: '#FF0000' },
-  { icon: FaEnvelope, href: 'mailto:gamejams.cs@ut.ee', label: 'Email', color: '#71BDFF' },
+  { icon: FaEnvelope, href: 'mailto:gamejams@ut.ee', label: 'Email', color: '#71BDFF' },
   { icon: FaDiscord, href: 'https://discord.com/invite/Z8Hzm6s9A7', label: 'Discord', color: '#5865F2' },
 ]
 
@@ -146,14 +146,14 @@ export default function Footer() {
             >
               <Icon as={FaEnvelope} color="#71BDFF70" boxSize={4} />
               <Link
-                href="mailto:gamejams.cs@ut.ee"
+                href="mailto:gamejams@ut.ee"
                 color="#71BDFF"
                 fontWeight="medium"
                 fontSize="sm"
                 _hover={{ color: 'white', textDecoration: 'none' }}
                 transition="color 0.2s"
               >
-                gamejams.cs@ut.ee
+                gamejams@ut.ee
               </Link>
             </HStack>
 
