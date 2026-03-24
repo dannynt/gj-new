@@ -1,5 +1,6 @@
-import { Box, Image, keyframes } from '@chakra-ui/react'
+import { Box, Image } from '@chakra-ui/react'
 import { useEffect, useRef } from 'react'
+import { keyframes } from '@emotion/react'
 
 // Scroll animations for different rows - alternating directions
 const scrollRight = keyframes`
