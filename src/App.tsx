@@ -4,11 +4,13 @@ import About from "./components/About";
 import Schedule from "./components/Schedule";
 import PastJams from "./components/PastJams";
 import Footer from "./components/Footer";
+import FloatingShapes from "./components/FloatingShapes";
 import Navbar from "./components/Navbar";
 
 function App() {
   return (
     <Box position="relative" overflow="hidden" bg="jam.dark" minH="100vh">
+      <FloatingShapes />
       <Navbar />
       {/* Hero */}
       <Container maxW="container.lg" px={{ base: 4, md: 6 }}>
